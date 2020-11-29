@@ -21,7 +21,7 @@ router.post('/upload', function (req, res) {
     }
     const tmpFile = req.files[0];
     const tmpPath = tmpFile.path;
-    console.log(tmpPath);
+    // console.log(tmpPath);
 
     /** The original name of the uploaded file
      stored in the variable "originalname". * */
@@ -30,7 +30,7 @@ router.post('/upload', function (req, res) {
     tmpFilename = tmpFile.originalname
 
     /** A better way to copy the uploaded file. * */
-    console.log(targetPath);
+    // console.log(targetPath);
 
 
     if (!fs.existsSync('uploads/')) {
@@ -47,6 +47,10 @@ router.post('/upload', function (req, res) {
       res.end();
       console.log(err);
     });
+    fs.unlink(src.path, (err) => {
+      if (err) throw err;
+      // console.log('bug');
+    })
   });
 });
 
@@ -64,7 +68,7 @@ router.get('/download', function (req, res) {
   //   } else res.end()
   // }
   const options = {
-    root: path.join(__dirname, 'uploads'),
+    root: `${path.dirname(process.execPath)}/uploads/`,
     dotfiles: 'deny',
     headers: {
       'x-timestamp': Date.now(),
@@ -81,7 +85,7 @@ router.get('/download', function (req, res) {
         res.end()
       }
     })
-  } else {
+  } else if (tmpFilename) {
     res.sendFile(tmpFilename, options, function (err) {
       if (err) {
         console.log(err)
@@ -91,6 +95,9 @@ router.get('/download', function (req, res) {
         res.end()
       }
     })
+  } else {
+    res.status(500).end()
+    console.log('请先上传文件')
   }
 })
 

@@ -6,12 +6,13 @@ const filelist = require('./fileList')
 const cors = require('cors')
 // const multer = require('multer')
 // const indexJs = require('./indexJs')
+const fs = require('fs')
 
 const app = express();
 const router = express.Router();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'pug');
 app.use(cors())
 app.use(logger('dev'));
@@ -21,7 +22,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 const indexList = router.get('/', function (req, res) {
-  app.use(express.static(`${__dirname}/public`, { index: 'index.html' }));
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+
+  fs.readFile('./practice/index.html', 'utf-8', function (err, data) {
+    if (err) {
+      console.log(err);
+    }
+    res.end(data);
+  });
+  // app.use(express.static(path.join(__dirname, 'public'), { index: 'index.html' }));
   // res.render('index', { title: 'Express' });
 })
 

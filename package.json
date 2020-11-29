@@ -4,11 +4,14 @@
   "description": "multi chat and group chat app built with express,socket.io and react.",
   "scripts": {
     "server": "node ./server/server.js",
-    "client": "webpack-dev-server "
+    "client": "webpack-dev-server ",
+    "pkg": "pkg . -t win --out-path=output/"
   },
   "bin" : "./server/server.js",
   "pkg": {
-    "assets": ["public/classrooms/*","background.jpg","public/users/*"]
+    "assets": ["public/chatrooms/bumie.jpg", "public/chatrooms/xinchen.png","public/background.jpg","public/users/1.jpg",
+      "public/users/2.jpg","public/users/3.jpg","public/users/4.jpg","public/index.html","public/bundle.js","public/bundle.js.map"],
+    "scripts": []
   },
   "keywords": [
     "websocket",

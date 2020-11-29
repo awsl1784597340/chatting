@@ -2,7 +2,7 @@ const app = require('../app')
 const subserver = require('http').createServer(app)
 const server = require('http').createServer()
 const io = require('socket.io')(server)
-
+const path = require('path')
 const ClientManager = require('./ClientManager')
 const ChatroomManager = require('./ChatroomManager')
 const One2OneManager = require('./one2oneManager')
@@ -58,7 +58,7 @@ io.on('connection', function (client) {
 
 server.listen(3000, function (err) {
   if (err) throw err
-  console.log('server is on,listening on port 3000')
+  console.log('socket 服务端已经启动，位于3000端口')
 })
 
 subserver.listen(4000, function (err) {
